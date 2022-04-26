@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### H2 ###
+.h2/
+
+### maven ###
+.mvn
+mvnw*
