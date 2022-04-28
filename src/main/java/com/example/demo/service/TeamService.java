@@ -1,4 +1,6 @@
 package com.example.demo.service;
 
-public interface TeamService {
+import com.example.demo.entity.Team;
+
+public interface TeamService extends CrudBaseService<Team, String> {
 }

@@ -11,5 +11,5 @@ public class MemberDto {
     private String name;
     private String surname;
     private Status status;
-    private TeamDto team;
+    private String teamName;
 }

@@ -1,4 +1,6 @@
 package com.example.demo.service;
 
-public interface MemberService {
+import com.example.demo.entity.Member;
+
+public interface MemberService extends CrudBaseService<Member, Long> {
 }

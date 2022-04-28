@@ -15,9 +15,6 @@ import java.util.List;
 @Table(name = "team")
 public class Team {
     @Id
-    @Column(name="id")
-    private Long id;
-
     @NotNull
     @NotBlank
     @Size(max = 50, message = "The name should have at most 50 characters")

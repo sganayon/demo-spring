@@ -9,11 +9,8 @@
     <changeSet author="ap" id="1.1">
         <!-- CREATE TABLE -->
         <createTable tableName="team" >
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="team_pk"/>
-            </column>
             <column name="name" type="varchar(50)">
-                <constraints nullable="false"  unique="true"/>
+                <constraints primaryKey="true" primaryKeyName="team_pk"/>
             </column>
         </createTable>
     </changeSet>
