@@ -2,19 +2,28 @@ package com.example.demo.mapper;
 
 import com.example.demo.dto.MemberDto;
 import com.example.demo.entity.Member;
-import com.example.demo.repository.TeamRepository;
-import org.mapstruct.Context;
+import com.example.demo.entity.Team;
+import com.example.demo.service.TeamService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {TeamRepository.class})
-public interface MemberMapper {
+/**
+ * Mapper de membre compatible avec Spring (componentModel)
+ */
+@Mapper(componentModel = "spring")
+public abstract class MemberMapper {
+    @Autowired protected TeamService teamService;
 
-    @Mapping(target = "teamName", source = "member.team.name")
-    MemberDto toDto(Member member);
+    @Mapping(target = "teamName", source = "team.name")
+    public abstract MemberDto toDto(Member member);
 
     @Mapping(target = "team", source = "teamName")
-    Member toEntity(MemberDto memberDto, @MappingTarget Member member, @Context TeamRepository teamRepository);
+    public abstract Member toEntity(MemberDto memberDto);
+
+    // Ici l'annotation @Name sur le CrudService ne marche pas, donc on fait le mapping à la main
+    protected Team findTeamById(String teamName){
+        return teamService.findOneById(teamName);
+    }
 }
 

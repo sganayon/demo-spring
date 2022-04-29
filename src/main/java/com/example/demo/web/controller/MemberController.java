@@ -13,6 +13,8 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +29,10 @@ public class MemberController {
     @GetMapping
     @Operation(description = "Get all members after applying the filters")
     public List<MemberDto> getMembers(
-        @RequestParam("pageSize") Integer pageSize,
-        @RequestParam("pageNumber") Integer pageNumber,
-        @RequestParam("sortedElement") String sortedElement,
-        @RequestParam("sortedAsc") Boolean sortedAsc,
+        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+        @RequestParam(value = "sortedElement", required = false) String sortedElement,
+        @RequestParam(value = "sortedAsc", required = false) Boolean sortedAsc,
         @Join(path="team", alias="team")
         @And({
               @Spec(path = "id", params = "id", spec = Equal.class),
@@ -45,11 +47,16 @@ public class MemberController {
 
     @GetMapping("/{id}")
     @Operation(description = "Get one member")
-    public MemberDto getMember(@PathVariable long id){
-        return memberFacade.getOneById(id);
+    public ResponseEntity<MemberDto> getMember(@PathVariable long id){
+        MemberDto memberDto = memberFacade.getOneById(id);
+        if(memberDto == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(memberFacade.getOneById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Delete one member")
     public void deleteMember(@PathVariable long id){
         memberFacade.deleteOneById(id);
@@ -57,7 +64,7 @@ public class MemberController {
 
     @PostMapping
     @Operation(description = "Add one member")
-    public void addMember(@RequestBody MemberDto memberDto){
-        memberFacade.save(memberDto);
+    public long addMember(@RequestBody MemberDto memberDto){
+        return memberFacade.save(memberDto);
     }
 }

@@ -21,8 +21,8 @@
             <column name="status" type="varchar(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="team_id" type="bigint">
-                <constraints nullable="false" references="team(id)" foreignKeyName="member_team_fk"/>
+            <column name="team_name" type="varchar(50)">
+                <constraints references="team(name)" foreignKeyName="member_team_fk"/>
             </column>
         </createTable>
     </changeSet>
