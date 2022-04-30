@@ -12,4 +12,5 @@ public interface TeamFacade {
     TeamDto getOneById(String teamName);
     void deleteOneById(String teamName);
     String save(TeamPostDto teamDto);
+    TeamDto update(TeamPostDto teamDto, String id);
 }

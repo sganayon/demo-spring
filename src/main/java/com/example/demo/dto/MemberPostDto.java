@@ -11,18 +11,17 @@ import javax.validation.constraints.Size;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MemberDto {
-    private Long id;
+public class MemberPostDto {
     @NotNull @NotBlank
     @Size(max = 50, message = "The name should have at most 50 characters")
     @Pattern(regexp = "^[A-Za-z'-]*$", message = "Only letters, quote and dash are allowed")
     private String name;
-    @NotNull @NotBlank @Size(max = 50, message = "The name should have at most 50 characters")
+    @NotNull @NotBlank @Size(max = 50, message = "The surname should have at most 50 characters")
     @Pattern(regexp = "^[A-Za-z'-]*$", message = "Only letters, quote and dash are allowed")
     private String surname;
     @NotNull
     private Status status;
-    @Size(max = 50, message = "The name should have at most 50 characters")
+    @Size(max = 50, message = "The teamName should have at most 50 characters")
     @Pattern(regexp = "^[A-Za-z0-9'_ -]*$", message = "Only letter, number, quote, dash, underscore and space are allowed")
     private String teamName;
 }

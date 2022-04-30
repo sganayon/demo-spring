@@ -63,4 +63,10 @@ public class TeamController {
     public String addTeam(@RequestBody TeamPostDto teamDto){
         return teamFacade.save(teamDto);
     }
+
+    @PutMapping("/{teamName}")
+    @Operation(description = "Update one team")
+    public TeamDto updateTeam(@RequestBody TeamPostDto teamDto, @PathVariable String teamName){
+        return teamFacade.update(teamDto, teamName);
+    }
 }

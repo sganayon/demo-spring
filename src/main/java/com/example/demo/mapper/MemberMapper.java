@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.MemberDto;
+import com.example.demo.dto.MemberPostDto;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.Team;
 import com.example.demo.service.TeamService;
@@ -19,7 +20,7 @@ public abstract class MemberMapper {
     public abstract MemberDto toDto(Member member);
 
     @Mapping(target = "team", source = "teamName")
-    public abstract Member toEntity(MemberDto memberDto);
+    public abstract Member toEntity(MemberPostDto memberDto);
 
     // Ici l'annotation @Name sur le CrudService ne marche pas, donc on fait le mapping à la main
     protected Team findTeamById(String teamName){

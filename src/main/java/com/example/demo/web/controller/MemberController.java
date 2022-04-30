@@ -1,6 +1,7 @@
 package com.example.demo.web.controller;
 
 import com.example.demo.dto.MemberDto;
+import com.example.demo.dto.MemberPostDto;
 import com.example.demo.entity.Member;
 import com.example.demo.facade.MemberFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,7 +65,13 @@ public class MemberController {
 
     @PostMapping
     @Operation(description = "Add one member")
-    public long addMember(@RequestBody MemberDto memberDto){
+    public long addMember(@RequestBody MemberPostDto memberDto){
         return memberFacade.save(memberDto);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(description = "Update one member")
+    public MemberDto updateMember(@RequestBody MemberPostDto memberDto, @PathVariable long id){
+        return memberFacade.update(memberDto, id);
     }
 }
