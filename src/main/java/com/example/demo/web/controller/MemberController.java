@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,7 @@ public class MemberController {
         if(memberDto == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(memberFacade.getOneById(id), HttpStatus.OK);
+        return new ResponseEntity<>(memberDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -63,9 +64,10 @@ public class MemberController {
         memberFacade.deleteOneById(id);
     }
 
+    // @Valid permet au Test de tester la validation, mais c'est appliqué par défaut lors du run ==> surement un problème de configuration du test
     @PostMapping
     @Operation(description = "Add one member")
-    public long addMember(@RequestBody MemberPostDto memberDto){
+    public long addMember(@Valid @RequestBody MemberPostDto memberDto){
         return memberFacade.save(memberDto);
     }
 

@@ -1,0 +1,1 @@
+INSERT INTO member (id, name, surname, status) VALUES ('1', 'POULAT', 'axel', 'BACKEND');

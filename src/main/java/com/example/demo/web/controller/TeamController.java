@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -48,7 +47,7 @@ public class TeamController {
         if(teamDto == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(teamFacade.getOneById(teamName), HttpStatus.OK);
+        return new ResponseEntity<>(teamDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{teamName}")
