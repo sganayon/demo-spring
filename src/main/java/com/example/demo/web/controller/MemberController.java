@@ -28,6 +28,7 @@ import java.util.List;
 public class MemberController {
     private final MemberFacade memberFacade;
 
+    // TODO : trouver comment intégrer specification-arg-resolver dans spring-doc
     @GetMapping
     @Operation(description = "Get all members after applying the filters")
     public List<MemberDto> getMembers(
@@ -64,7 +65,6 @@ public class MemberController {
         memberFacade.deleteOneById(id);
     }
 
-    // @Valid permet au Test de tester la validation, mais c'est appliqué par défaut lors du run ==> surement un problème de configuration du test
     @PostMapping
     @Operation(description = "Add one member")
     public long addMember(@Valid @RequestBody MemberPostDto memberDto){
@@ -73,7 +73,7 @@ public class MemberController {
 
     @PutMapping("/{id}")
     @Operation(description = "Update one member")
-    public MemberDto updateMember(@RequestBody MemberPostDto memberDto, @PathVariable long id){
+    public MemberDto updateMember(@Valid @RequestBody MemberPostDto memberDto, @PathVariable long id){
         return memberFacade.update(memberDto, id);
     }
 }

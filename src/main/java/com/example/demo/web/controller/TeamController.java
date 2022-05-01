@@ -16,6 +16,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,7 @@ import java.util.List;
 public class TeamController {
     private final TeamFacade teamFacade;
 
+    // TODO : trouver comment intégrer specification-arg-resolver dans spring-doc
     @GetMapping
     @Operation(description = "Get all teams after applying the filters")
     public List<TeamDto> getTeams(
@@ -59,13 +62,13 @@ public class TeamController {
 
     @PostMapping
     @Operation(description = "Add one team")
-    public String addTeam(@RequestBody TeamPostDto teamDto){
+    public String addTeam(@Valid @RequestBody TeamPostDto teamDto){
         return teamFacade.save(teamDto);
     }
 
     @PutMapping("/{teamName}")
     @Operation(description = "Update one team")
-    public TeamDto updateTeam(@RequestBody TeamPostDto teamDto, @PathVariable String teamName){
+    public TeamDto updateTeam(@Valid @RequestBody TeamPostDto teamDto, @PathVariable String teamName){
         return teamFacade.update(teamDto, teamName);
     }
 }

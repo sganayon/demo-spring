@@ -3,15 +3,17 @@ package com.example.demo.web.controller;
 import com.example.demo.dto.TeamPostDto;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.Team;
-import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.TeamRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -27,21 +29,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Sql(value = "classpath:sql/delete-all.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class TeamControllerTest {
     @Autowired MockMvc mockMvc;
     @Autowired TeamRepository teamRepository;
-    @Autowired MemberRepository memberRepository;
     @Autowired ObjectMapper objectMapper;
+    @Autowired JdbcTemplate jdbcTemplate;
 
     static final String TEAM_URL = "/api/team";
+
+    // TODO : trouver pourquoi ce n'est pas executé ...
+    @BeforeEach
+    void cleanDataBase() {
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "member", "team");
+    }
 
     @Test
     @Sql("classpath:sql/insert-user.sql")
     void addTeamWithUserTest() throws Exception {
         TeamPostDto content = new TeamPostDto();
         content.setName("TEAM 1");
-        content.setMemberIds(Collections.singleton(1L));
+        content.setMemberIds(Collections.singleton(1L)); // Voir insert-user.sql
 
         this.mockMvc.perform(post(TEAM_URL)
                 .characterEncoding("UTF-8")

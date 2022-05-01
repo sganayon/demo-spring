@@ -34,6 +34,7 @@ public class Member {
 
     @NotNull
     @Column(name="status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ToString.Exclude
